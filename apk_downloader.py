@@ -2,8 +2,9 @@
 
 """
 APK Downloader
-Author: Jay Lux Ferro
-Date:   6th March, 2021
+Author:     Jay Lux Ferro
+Website:    https://sperixlabs.org
+Date:       6th March, 2021
 """
 from bs4 import BeautifulSoup as BS
 import requests
@@ -55,6 +56,7 @@ if web_data.status_code == 200:
         if res['status'] == 'success':
             download_link = 'https:{}'.format(res['url'])
             print('PackageName: {}\nFileSize: {}\nHash(sha1): {}\nVersion: {}\nVersionCode: {}\nDownloadLink: {}\n'.format(res['packagename'], res['filesize'], res['sha1'], res['version'], res['version_code'], download_link))
+
             # trigger wget download file
             subprocess.call(['wget', download_link])
         else:
