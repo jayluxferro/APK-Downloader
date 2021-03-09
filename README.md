@@ -6,11 +6,11 @@
 1. Clone project
 ```
 git clone https://github.com/jayluxferro/APK-Downloader
-cd APK-Downloader
 ```
 
 2. Install python dependencies using pip
 ```
+cd APK-Downloader
 pip install -r requirements.txt
 ```
 
