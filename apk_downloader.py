@@ -43,6 +43,7 @@ if len(sys.argv) != 2:
 bundle_identifier = sys.argv[1].strip()
 
 ## getting tokens from the website
+print('[-] Processing...')
 web_data = requests.get(base_url)
 if web_data.status_code == 200:
     res = web_data.text.splitlines()
@@ -60,6 +61,8 @@ if web_data.status_code == 200:
 
             # trigger wget download file
             subprocess.call(['wget', download_link])
+        elif res['status'] == 'error':
+            print(res['data'])
         else:
             default_log()
     except:
