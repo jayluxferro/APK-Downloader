@@ -3,7 +3,13 @@
 - Requires **wget** downloader
 
 #### Instructions
-1. Install python dependencies using pip
+1. Clone project
+```
+git clone https://github.com/jayluxferro/APK-Downloader
+cd APK-Downloader
+```
+
+2. Install python dependencies using pip
 ```
 pip install -r requirements.txt
 ```
