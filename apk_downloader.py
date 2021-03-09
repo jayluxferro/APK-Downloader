@@ -15,7 +15,7 @@ import ssl
 base_url = 'https://apps.evozi.com/apk-downloader'
 download_url = 'https://api-apk.evozi.com/download'
 
-payload='daabeccafbd={}&fafcddaadfefdf={}&facbbacfccfa={}&fetch=false'
+payload='{}={}&{}={}&{}={}&fetch=false'
 
 headers = {
   'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:87.0) Gecko/20100101 Firefox/87.0',
@@ -48,8 +48,9 @@ if web_data.status_code == 200:
     res = web_data.text.splitlines()
     token1 = res[195].strip().split(':')[1].strip().split(',')[0]
     token2 = res[164].strip().split('=')[-1].strip().replace("'", '').replace(';', '')
+    token3 = res[195].strip().split('=')[-1].strip().replace(' ', '').strip('{').split(',')[:-1]
 
-    payload = payload.format(token1, bundle_identifier, token2)
+    payload = payload.format(token3[0].split(':')[0], token1, token3[1].split(':')[0], bundle_identifier, token3[2].split(':')[0], token2)
     res = requests.post(download_url, data=payload, headers=headers)
     try:
         res = res.json()

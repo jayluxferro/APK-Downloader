@@ -1,2 +1,4 @@
 *.pyc
 *.apk
+*~
+test*.py
