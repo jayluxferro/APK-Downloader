@@ -23,5 +23,5 @@ Eg.
 python apk_downloader.py com.ecgmobile
 ```
 
-**NB**: To determine the bundle identifier, visit https://play.google.com/store/apps. Search for the app and the bundle identifier will show up in the url (as shown below).<br/>
+**NB**: To determine the bundle identifier, visit https://play.google.com/store/apps. Search for the app and the bundle identifier will show up in the URL; as shown below.<br/>
 <img src='img/bundle_identifier.png' />
