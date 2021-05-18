@@ -71,6 +71,6 @@ if web_data.status_code == 200:
     except:
         default_log()
 else:
-    if web_data.text.find('Cloudflare') != -1:
-        print('Disable VPN or Proxy')
     default_log()
+    if web_data.text.find('Cloudflare') != -1:
+        print('Disable VPN or Proxy.')
