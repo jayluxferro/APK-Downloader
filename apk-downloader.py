@@ -11,6 +11,7 @@ import requests
 import subprocess
 import sys
 import ssl
+from os import path
 
 base_url = 'https://apps.evozi.com/apk-downloader'
 download_url = 'https://api-apk.evozi.com/download'
@@ -31,7 +32,7 @@ def default_log():
     print('Process failed. Try again.')
 
 def usage():
-    print('Usage: python {} [bundle identifier]\nE.g. python {} com.ecgmobile'.format(sys.argv[0], sys.argv[0]))
+    print('Usage: {} [bundle identifier]\nE.g. {} com.ecgmobile'.format(path.basename(sys.argv[0]), path.basename(sys.argv[0])))
     sys.exit()
 
 
