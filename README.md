@@ -16,7 +16,7 @@ pip install -r requirements.txt
 
 #### Usage
 ```
-python apk_downloader.py [bundle identifier]
+python apk-downloader.py [bundle identifier]
 ```
 Eg.
 ```
