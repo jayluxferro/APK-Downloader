@@ -32,7 +32,7 @@ headers = {
 
 def default_log():
     print("Process failed. Try again.")
-
+    sys.exit(1)
 
 def usage():
     print(
