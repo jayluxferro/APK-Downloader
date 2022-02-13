@@ -27,7 +27,7 @@ python apk-downloader.py com.ecgmobile
 <img src='img/bundle_identifier.png' />
 
 #### Limitations
-**NB**: Rate Limited.
+**NB**: Rate Limited. Try using a VPN.
 
 #### Acknowledgement
 1. https://github.com/EngineerDanny/apk-downloader

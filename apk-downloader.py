@@ -8,9 +8,7 @@ Date:       6th March, 2021
 """
 from bs4 import BeautifulSoup as BS
 import requests
-import subprocess
 import sys
-import ssl
 import re
 from os import path
 
@@ -26,6 +24,8 @@ headers = {
     "Accept": "application/json, text/javascript, */*; q=0.01",
     "Accept-Language": "en-US,en;q=0.5",
     "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+    "Origin": "{}".format(base_url),
+    "`Referer": "{}".format(search_url),
     "Connection": "keep-alive",
 }
 
