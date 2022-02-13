@@ -27,4 +27,7 @@ python apk-downloader.py com.ecgmobile
 <img src='img/bundle_identifier.png' />
 
 #### Limitations
-**NB**: Might not work over a VPN or Proxy where some security checks are required before accessing web contents.
+**NB**: Rate Limited.
+
+#### Acknowledgement
+1. https://github.com/EngineerDanny/apk-downloader
