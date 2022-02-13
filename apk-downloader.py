@@ -11,7 +11,8 @@ import requests
 import subprocess
 import sys
 import re
-from os import path
+from os import path, getenv
+from cfproxy import CFProxy
 
 base_url = "https://apksfull.com"
 download_url = "{}/dl".format(base_url)
@@ -35,6 +36,7 @@ def default_log():
     print("Process failed. Try again.")
     sys.exit(1)
 
+
 def usage():
     print(
         "Usage: {} [bundle identifier]\nE.g. {} com.ecgmobile".format(
@@ -42,6 +44,26 @@ def usage():
         )
     )
     sys.exit()
+
+
+def download_file(data):
+    global bundle_identifier
+    print("[+] Downloading...")
+    subprocess.call(
+        ["wget", data["download_link"], "-O", "{}.apk".format(bundle_identifier)]
+    )
+
+
+def download_with_cf_work(url, data, headers):
+    print("[+] Using Cloudflare Worker Proxy...")
+    proxy = CFProxy(
+        getenv("CF_IPROXY_HOST"), getenv("CF_USER_AGENT"), getenv("CF_DUMMY_IP")
+    )
+    res = proxy.post(url, data=data).json()
+    if res["status"] == True:
+        download_file(res)
+    else:
+        default_log()
 
 
 ## entry
@@ -82,17 +104,19 @@ if len(dl_links) > 0:
 
     token = re.findall("token','([^']+)", web_data[-2].contents[0])[0]
 
-    res = requests.post(download_url, data={"token": token}, headers=headers)
+    payload = {"token": token}
+    res = requests.post(download_url, data=payload, headers=headers)
     if res.status_code != 200:
         default_log()
+
     data = res.json()
-    #print(data)
     if data["status"] == True:
-        print("[+] Downloading...")
-        subprocess.call(
-            ["wget", data["download_link"], "-O", "{}.apk".format(bundle_identifier)]
-        )
+        download_file(data)
     else:
-        print("[-] Process failed. Reason => {}".format(data['error']))
+        # checking  if cloudflare worker can be used
+        if getenv("CF_TOKEN_VALUE") is not None:
+            download_with_cf_work(download_url, payload, headers)
+        else:
+            print("[-] Process failed. Reason => {}".format(data["error"]))
 else:
     default_log()
