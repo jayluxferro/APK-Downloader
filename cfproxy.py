@@ -33,4 +33,4 @@ class CFProxy:
         self.session.headers.update({self.HOST_HEADER: parsed_uri.hostname})
         self.session.headers.update({self.IP_HEADER: self.fake_ip})
         proxyfied_url = '{0}://{1}{2}'.format(parsed_uri.scheme, self.proxy_host, parsed_uri.path)
-        return self.session.request(method, proxyfied_url, **kwargs)
+        return self.session.request(method, proxyfied_url, verify=False, **kwargs)
