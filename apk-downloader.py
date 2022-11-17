@@ -47,10 +47,10 @@ def usage():
 
 
 def download_file(data):
-    global bundle_identifier
+    global bundle_identifier, app_version
     print("[+] Downloading...")
     subprocess.call(
-        ["wget", data["download_link"], "-O", "{}.apk".format(bundle_identifier)]
+        ["wget", data["download_link"], "-O", "{}-{}.apk".format(bundle_identifier, app_version)]
     )
 
 
@@ -71,6 +71,7 @@ if len(sys.argv) != 2:
     usage()
 
 bundle_identifier = sys.argv[1].strip()
+app_version = None
 
 ## getting tokens from the website
 print("[-] Processing...")
@@ -93,10 +94,23 @@ dl_links = []
 for link in links:
     _link = link.get("href")
     if _link.find("/download/") != -1:
-        dl_links.append("{}{}".format(base_url, _link))
+        _version = link.get('title').split(' ')[-1]
+        _title = ' '.join(link.get('title').split(' ')[1:-1])
+        _download_size = ' '.join(link.text.strip().split(' ')[1:]).strip('(').strip(')')
+        dl_links.append({
+            'url': '{}{}'.format(base_url, _link),
+            'version': _version,
+            'title': _title,
+            'download_size': _download_size,
+        })
 
 if len(dl_links) > 0:
-    res = requests.get(dl_links[0], headers=headers, allow_redirects=True, verify=False)
+    # display app information
+    latest_version = dl_links[0]
+    print('\nApp Details\nTitle: {}\nVersion: {}\nDownload Size: {}\n'.format(latest_version['title'], latest_version['version'], latest_version['download_size']))
+    app_version = latest_version['version']
+
+    res = requests.get(latest_version['url'], headers=headers, allow_redirects=True, verify=False)
     if res.status_code != 200:
         default_log()
 
