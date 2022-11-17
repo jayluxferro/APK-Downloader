@@ -75,13 +75,13 @@ bundle_identifier = sys.argv[1].strip()
 ## getting tokens from the website
 print("[-] Processing...")
 res = requests.get(
-    google_play_url.format(bundle_identifier), headers=headers, allow_redirects=True
+    google_play_url.format(bundle_identifier), headers=headers, allow_redirects=True, verify=False
 )
 if res.status_code != 200:
     default_log()
 
 res = requests.get(
-    "{}/{}".format(search_url, bundle_identifier), headers=headers, allow_redirects=True
+    "{}/{}".format(search_url, bundle_identifier), headers=headers, allow_redirects=True, verify=False
 )
 if res.status_code != 200:
     default_log()
@@ -96,7 +96,7 @@ for link in links:
         dl_links.append("{}{}".format(base_url, _link))
 
 if len(dl_links) > 0:
-    res = requests.get(dl_links[0], headers=headers, allow_redirects=True)
+    res = requests.get(dl_links[0], headers=headers, allow_redirects=True, verify=False)
     if res.status_code != 200:
         default_log()
 
@@ -105,7 +105,7 @@ if len(dl_links) > 0:
     token = re.findall("token','([^']+)", web_data[-2].contents[0])[0]
 
     payload = {"token": token}
-    res = requests.post(download_url, data=payload, headers=headers)
+    res = requests.post(download_url, data=payload, headers=headers, verify=False)
     if res.status_code != 200:
         default_log()
 
