@@ -33,7 +33,7 @@ headers = {
 
 
 def default_log():
-    print("Process failed. Try again.")
+    print("Process failed. Try again or use the download URL.")
     sys.exit(1)
 
 
@@ -110,6 +110,7 @@ if len(dl_links) > 0:
     print('\nApp Details\nTitle: {}\nVersion: {}\nDownload Size: {}\n'.format(latest_version['title'], latest_version['version'], latest_version['download_size']))
     app_version = latest_version['version']
 
+    print('[-] Download URL: ' + latest_version['url'])
     res = requests.get(latest_version['url'], headers=headers, allow_redirects=True, verify=False)
     if res.status_code != 200:
         default_log()
